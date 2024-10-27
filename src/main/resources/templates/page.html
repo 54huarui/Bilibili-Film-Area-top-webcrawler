@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+</head>
+<body>
+<h1>统计</h1>
+
+<h1>播放量最高的视频</h1>
+<div th:if="${highestViewCountVideo != null}">
+  <p>标题: <span th:text="${highestViewCountVideo.title}"></span></p>
+  <p>作者: <span th:text="${highestViewCountVideo.author}"></span></p>
+  <p>播放量: <span th:text="${highestViewCountVideo.viewCount}"></span></p>
+</div>
+
+<h1>弹幕最多的视频</h1>
+<div th:if="${highestDanmakuCountVideo != null}">
+  <p>标题: <span th:text="${highestDanmakuCountVideo.title}"></span></p>
+  <p>作者: <span th:text="${highestDanmakuCountVideo.author}"></span></p>
+  <p>弹幕量: <span th:text="${highestDanmakuCountVideo.danmakuCount}"></span></p>
+</div>
+
+
+
+<h1>爬取的数据</h1>
+
+<div>
+  <h2>视频列表</h2>
+  <table border="1">
+    <tr>
+      <th>标题</th>
+      <th>作者</th>
+      <th>分区</th>
+      <th>播放量</th>
+      <th>弹幕量</th>
+    </tr>
+    <tr th:each="video : ${dataList}">
+      <td th:text="${video.title}"></td>
+      <td th:text="${video.author}"></td>
+      <td th:text="${video.tname}"></td>
+      <td th:text="${video.viewCount}"></td>
+      <td th:text="${video.danmakuCount}"></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
