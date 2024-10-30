@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,6 +44,11 @@ public class getdatas {
         public String getTname() { return tname; }
         public int getViewCount() { return viewCount; }
         public int getDanmakuCount() { return danmakuCount; }
+
+        @Override
+        public String toString() {
+            return title + "\t" + author + "\t" + tname + "\t" + viewCount + "\t" + danmakuCount;
+        }
     }
 
     // 获取数据
@@ -73,10 +80,26 @@ public class getdatas {
 
                 dataList.add(new dataobject(title, author, tname, viewCount, danmakuCount));
             }
+
+            // 保存数据到文件
+            saveDataToFile("data.txt"); // 指定保存文件的路径
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return dataList;
+    }
+
+    // 保存数据到文本文件
+    private void saveDataToFile(String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("标题\t作者\t分区\t播放量\t弹幕量\n"); // 写入表头
+            for (dataobject video : dataList) {
+                writer.write(video.toString() + "\n"); // 写入每个视频的数据
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public dataobject getHighestViewCountVideo() {
